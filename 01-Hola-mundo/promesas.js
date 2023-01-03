@@ -1,0 +1,64 @@
+const empleados = [
+    {
+        id:1,
+        nombre:'Ramiro'
+    },
+    {
+        id:2,
+        nombre:'Leidy'
+    },
+    {
+        id:3,
+        nombre:'shadday'
+    }
+];
+
+const sueldos = [
+    {
+        id:1,
+        salario:1000,
+
+    },
+    {
+        id:2,
+        salario:1500
+    }
+];
+
+const getEmpleado = (id) =>{
+
+    const empleado = empleados.find((e)=> e.id === id)?.nombre;
+    const promesa = new Promise((resolve,reject)=>{
+        if(empleado){
+            resolve(empleado)
+        }else{
+            reject(`No existe empleado con id: ${id}`)
+        }
+    });
+
+    return promesa;
+}
+
+const getSalario = (id)=>{
+
+  return new Promise((resolve,reject)=>{
+    const salario = sueldos.find((s)=>s.id === id)?.salario;
+    if(salario){
+        resolve(salario)
+    }else{
+        reject(`No existe salario con ese id: ${id}`)
+    }
+  })
+
+}
+const id = 110;
+let nombre;
+getEmpleado(id)
+.then(empleado=>{
+    nombre = empleado;
+     return getSalario(id);
+})
+.then(salario =>console.log(`El empleado: ${nombre} tiene un salario de: ${salario}` ))
+.catch(err=>console.log(err))
+
+     
